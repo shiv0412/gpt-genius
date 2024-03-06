@@ -1,0 +1,13 @@
+.page-container{
+    display: flex;
+}
+
+.page-content-container  .cl-internal-phfxlr{
+    height: 100vh;
+    padding: 16px 32px;
+}
+
+.page-content-container{
+    width:78vw;
+    background:#EBF5FB ;
+}
