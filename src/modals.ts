@@ -26,3 +26,12 @@ export interface ITourDetails {
   description: string;
   stops: string[];
 }
+
+export interface ITourDetailsWithUser extends ITourDetails {
+  id: string;
+}
+
+export interface IReduxStore {
+  userId: string | null;
+  userToursDetails: ITourDetails[] | null;
+}

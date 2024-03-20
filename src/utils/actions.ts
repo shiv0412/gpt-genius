@@ -68,6 +68,75 @@ export const generateTourResponse = async (city: string, country: string) => {
   }
 };
 
+export const generateTrendingTours = async (country: string) => {
+  const query = `Find five cities this exact ${country}.
+  If ${country} exist, create a list of things families can do in this ${country}.
+  Once you have a list, create a one-day tour. Response should be  in the following JSON format:
+  {
+    "tour": [{
+      "city":Any city in "${country}",
+      "country": "${country}",
+      "title": "title of the tour",
+      "description": "short description of the city and tour",
+      "stops": [" stop name", "stop name","stop name"]
+    },
+    {
+      "city":Any city in "${country}",
+      "country": "${country}",
+      "title": "title of the tour",
+      "description": "short description of the city and tour",
+      "stops":[" stop name", "stop name","stop name"]
+    },
+    {
+      "city":Any city in "${country}",
+      "country": "${country}",
+      "title": "title of the tour",
+      "description": "short description of the city and tour",
+      "stops":[" stop name", "stop name","stop name"]
+    },{
+      "city":Any city in "${country}",
+      "country": "${country}",
+      "title": "title of the tour",
+      "description": "short description of the city and tour",
+      "stops":[" stop name", "stop name","stop name"]
+    },{
+      "city":Any city in "${country}",
+      "country": "${country}",
+      "title": "title of the tour",
+      "description": "short description of the city and tour",
+      "stops": [" stop name", "stop name","stop name"]
+    }
+  ]
+  }
+  "stops" property should include only three stops. All five "city" of the "${country}" are different.
+  If you can't find info on exact ${country}, or city does not exist, or it's population is less than 1, or it is not located in the following ${country},   return { "tour": null }, with no additional characters.`;
+  try {
+    const response = await openai.chat.completions.create({
+      messages: [
+        { role: "system", content: "you are a tour guide" },
+        {
+          role: "user",
+          content: query,
+        },
+      ],
+      model: "gpt-3.5-turbo",
+      temperature: 0,
+    });
+    const tourData = JSON.parse(
+      response.choices[0].message.content
+        ? response.choices[0].message.content
+        : ""
+    );
+
+    if (!tourData.tour) {
+      return null;
+    }
+    return { tour: tourData.tour };
+  } catch (error) {
+    return null;
+  }
+};
+
 // export const generateTourImage = async (city: string, country: string) => {
 //   try {
 //     const tourImage = await openai.images.generate({

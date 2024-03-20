@@ -7,19 +7,19 @@ import { AssistantTemperatureModes, NavLink } from "./modals";
 
 export const navLinks: NavLink[] = [
   {
-    href: "/assistant/chat",
-    title: "Chat",
-    icon: <FaRocketchat />,
-  },
-  {
-    href: "/assistant/tour",
-    title: "Tours",
-    icon: <PiMountains />,
-  },
-  {
     href: "/assistant/tour/new-tour",
     title: "New tour",
     icon: <GiAirplaneDeparture />,
+  },
+  {
+    href: "/assistant/tour",
+    title: "My tours",
+    icon: <PiMountains />,
+  },
+  {
+    href: "/assistant/chat",
+    title: "Tour assistant",
+    icon: <FaRocketchat />,
   },
   {
     href: "/assistant/profile",

@@ -144,7 +144,7 @@ export default function ChatContainer() {
       </MessageContainer>
       {isPending && (
         <LoaderContainer>
-          Typing...
+          Assistant typing...
           <Loader />
         </LoaderContainer>
       )}

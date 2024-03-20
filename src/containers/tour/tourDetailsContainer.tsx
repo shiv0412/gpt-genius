@@ -1,15 +1,20 @@
 "use client";
 import styled from "styled-components";
-
-import CustomLinkButton from "@/components/shared/CustomLinkButton";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+
+import CustomLinkButton from "@/components/shared/CustomLinkButton";
+import { connect } from "react-redux";
+import { IReduxStore, ITourDetailsWithUser } from "@/modals";
 // import { generateTourImage } from "@/utils/actions";
-import { useEffect } from "react";
+
+interface ITourDetailsContainer {
+  details: any;
+  tourCity: string;
+}
 
 const Container = styled.div`
-  padding: 50px 32px 8px 32px;
+  padding: 40px 32px 8px 32px;
   font-size: 14px;
   width: 525px;
   h1 {
@@ -41,42 +46,10 @@ const Container = styled.div`
   }
 `;
 
-const tours = [
-  {
-    tourCity: "Delhi",
-    tourCountry: "India",
-  },
-  {
-    tourCity: "Delhi",
-    tourCountry: "India",
-  },
-  {
-    tourCity: "Delhi",
-    tourCountry: "India",
-  },
-];
-
-const TourDetailsContainer = () => {
-  //   const {
-  //     mutate: handleGenerateTourImage,
-  //     isPending,
-  //     data: tourImageURLDetails,
-  //   } = useMutation({
-  //     mutationFn: (query: any) => generateTourImage(query.city, query.country),
-  //     onSuccess: (data) => {
-  //       if (!data) {
-  //         toast.error("Something went wrong...");
-  //         return;
-  //       }
-  //     },
-  //     onError: (error) => {
-  //       toast.error("Something went wrong...");
-  //     },
-  //   });
-
-  useEffect(() => {
-    // handleGenerateTourImage({ city: "Delhi", country: "India" });
-  }, []);
+const TourDetailsContainer = ({ details, tourCity }: ITourDetailsContainer) => {
+  const tourDetails = details.userToursDetails?.filter((tour: any) => {
+    return tour.CITY.toLowerCase() === tourCity.toLowerCase();
+  })[0];
 
   return (
     <Container>
@@ -90,15 +63,21 @@ const TourDetailsContainer = () => {
         height={150}
         alt="image"
       />
-      <h1>Some heading here</h1>
-      <p>some paragraph here</p>
+      <h1>{tourDetails.TITLE}</h1>
+      <p>{tourDetails.DESCRIPTION}</p>
       <ul>
-        {tours.map((stop: any, index: number) => {
-          return <li key={index}>{stop.tourCity}</li>;
+        {tourDetails.STOPS.split(",").map((stop: any, index: number) => {
+          return <li key={index}>{stop}</li>;
         })}
       </ul>
     </Container>
   );
 };
 
-export default TourDetailsContainer;
+const mapStateToProps = (state: any) => {
+  return {
+    details: state.tourDetails,
+  };
+};
+
+export default connect(mapStateToProps)(TourDetailsContainer);
