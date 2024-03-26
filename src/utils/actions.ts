@@ -1,6 +1,5 @@
 "use server";
 import OpenAI from "openai";
-
 import { IMessage } from "@/modals";
 
 const openai = new OpenAI({
@@ -137,15 +136,15 @@ export const generateTrendingTours = async (country: string) => {
   }
 };
 
-// export const generateTourImage = async (city: string, country: string) => {
-//   try {
-//     const tourImage = await openai.images.generate({
-//       prompt: `a panoramic view of the ${city} ${country}`,
-//       n: 1,
-//       size: "512x512",
-//     });
-//     return tourImage?.data[0]?.url;
-//   } catch (error) {
-//     return null;
-//   }
-// };
+export const generateTourImage = async (city: string, country: string) => {
+  try {
+    const tourImage = await openai.images.generate({
+      prompt: `a panoramic view of the ${city} ${country}`,
+      n: 1,
+      size: "512x512",
+    });
+    return tourImage?.data[0]?.url;
+  } catch (error) {
+    return null;
+  }
+};
