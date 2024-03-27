@@ -31,6 +31,6 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'app-gptgeniuspoc'
-          slot-name: 'Production'
+          slot-name: 'Development'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AD8055EC4A9D49B59DD99F3561B2E09A }}
