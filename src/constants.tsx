@@ -43,6 +43,3 @@ export const assistantTemperatureModes: AssistantTemperatureModes[] = [
 ];
 
 export const API_ENDPOINT = "https://app-gptgeniuspoc.azurewebsites.net";
-
-export const OPEN_AI_API_KEY =
-  "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";
