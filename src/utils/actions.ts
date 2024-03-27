@@ -1,9 +1,10 @@
 "use server";
 import OpenAI from "openai";
 import { IMessage } from "@/modals";
+import { OPEN_AI_API_KEY } from "@/constants";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: OPEN_AI_API_KEY,
 });
 
 export const generateChatResponse = async (
