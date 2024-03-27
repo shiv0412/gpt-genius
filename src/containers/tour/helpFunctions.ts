@@ -1,7 +1,8 @@
 import toast from "react-hot-toast";
+import { API_ENDPOINT } from "@/constants";
 
 export const saveTourDetails = (tourDetails: any, userId: string) => {
-  let apiURL: string = "http://localhost:8090/saveTour";
+  let apiURL: string = `${API_ENDPOINT}/saveTour`;
   fetch(apiURL, {
     method: "POST",
     headers: {

@@ -9,6 +9,7 @@ import Button from "@/components/shared/Button";
 import InputField from "@/components/shared/InputField";
 import { IReduxStore, ITourDetailsWithUser } from "@/modals";
 import { updateTours } from "@/utils/redux/actions/actions";
+import { API_ENDPOINT } from "@/constants";
 
 interface ITourContainer {
   details: IReduxStore;
@@ -50,7 +51,7 @@ const TourContainer = ({ details, updateTours }: ITourContainer) => {
     setIsFetching(true);
     try {
       const response = await fetch(
-        `http://localhost:8090/tours/${details.userId ? details.userId : ""}`
+        `${API_ENDPOINT}/tours/${details.userId ? details.userId : ""}`
       );
       const data = await response.json();
       setTourDetails(data.data);

@@ -2,7 +2,6 @@ import { FaRocketchat } from "react-icons/fa";
 import { PiMountains } from "react-icons/pi";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
-
 import { AssistantTemperatureModes, NavLink } from "./modals";
 
 export const navLinks: NavLink[] = [
@@ -42,3 +41,8 @@ export const assistantTemperatureModes: AssistantTemperatureModes[] = [
     tempValue: 2,
   },
 ];
+
+export const OPEN_AI_KEY =
+  "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";
+
+export const API_ENDPOINT = "https://app-gptgeniuspoc.azurewebsites.net";
