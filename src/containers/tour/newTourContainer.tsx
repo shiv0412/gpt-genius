@@ -15,6 +15,8 @@ import {
 } from "@/modals";
 import { generateTourResponse, generateTrendingTours } from "@/utils/actions";
 import { saveTourDetails } from "./helpFunctions";
+import TourSkeleton from "@/components/shared/skeletons/TourSkeleton";
+import ExploreToursSkeleton from "@/components/shared/skeletons/ExploreToursSkeleton";
 
 interface ITourContainer {
   details: IReduxStore | any;
@@ -193,30 +195,46 @@ const NewTourContainer = ({ details }: ITourContainer) => {
           handleClick={() => handleSubmit()}
         />
         {/* content section */}
-        <h1>{tourDetails?.title}</h1>
-        <p>{tourDetails?.description}</p>
-        <ul>
-          {tourDetails?.stops.map((stop: string, index: number) => {
-            return <li key={index}>{stop}</li>;
-          })}
-        </ul>
+        {isPending ? (
+          <TourSkeleton />
+        ) : (
+          <>
+            <h1>{tourDetails?.title}</h1>
+            <p>{tourDetails?.description}</p>
+            <ul>
+              {tourDetails?.stops.map((stop: string, index: number) => {
+                return <li key={index}>{stop}</li>;
+              })}
+            </ul>
+          </>
+        )}
       </Container>
       <TrendingTourContainer>
-        {trendingTours && <h4>Explore more in {trendingTours[0]?.country}</h4>}
-        <ul>
-          {trendingTours?.map((tourDetails: ITourDetails, index: number) => {
-            return (
-              <li key={index} onClick={() => setTourDetails(tourDetails)}>
-                <div> {tourDetails.city + ", " + tourDetails.country}</div>
-                <div>
-                  {tourDetails.stops.map((stop) => {
-                    return <span key={stop}>{stop + ", "}</span>;
-                  })}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+        {isFetchingTrendingTours ? (
+          <ExploreToursSkeleton />
+        ) : (
+          <>
+            {trendingTours && (
+              <h4>Explore more in {trendingTours[0]?.country}</h4>
+            )}
+            <ul>
+              {trendingTours?.map(
+                (tourDetails: ITourDetails, index: number) => {
+                  return (
+                    <li key={index} onClick={() => setTourDetails(tourDetails)}>
+                      <div>{tourDetails.city + ", " + tourDetails.country}</div>
+                      <div>
+                        {tourDetails.stops.map((stop) => {
+                          return <span key={stop}>{stop + ", "}</span>;
+                        })}
+                      </div>
+                    </li>
+                  );
+                }
+              )}
+            </ul>
+          </>
+        )}
       </TrendingTourContainer>
     </MainContainer>
   );

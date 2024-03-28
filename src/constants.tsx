@@ -42,4 +42,8 @@ export const assistantTemperatureModes: AssistantTemperatureModes[] = [
   },
 ];
 
+// API server endpoint
 export const API_ENDPOINT = "https://app-gptgeniuspoc.azurewebsites.net";
+// Redux constants
+export const SAVE_USER_DETAILS = "SAVE_USER_DETAILS";
+export const UPDATE_TOURS = "UPDATE_TOURS";

@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 import { IMessage } from "@/modals";
 
-const openai = new OpenAI({
+const openAI = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY,
 });
 
@@ -11,7 +11,7 @@ export const generateChatResponse = async (
   assistantTemperature: number
 ) => {
   try {
-    const response = await openai.chat.completions.create({
+    const response = await openAI.chat.completions.create({
       messages: [
         { role: "system", content: "you are a helpful assistant" },
         ...chatMessages,
@@ -41,7 +41,7 @@ export const generateTourResponse = async (city: string, country: string) => {
   "stops" property should include only three stops.
   If you can't find info on exact ${city}, or ${city} does not exist, or it's population is less than 1, or it is not located in the following ${country},   return { "tour": null }, with no additional characters.`;
   try {
-    const response = await openai.chat.completions.create({
+    const response = await openAI.chat.completions.create({
       messages: [
         { role: "system", content: "you are a tour guide" },
         {
@@ -110,7 +110,7 @@ export const generateTrendingTours = async (country: string) => {
   "stops" property should include only three stops. All five "city" of the "${country}" are different.
   If you can't find info on exact ${country}, or city does not exist, or it's population is less than 1, or it is not located in the following ${country},   return { "tour": null }, with no additional characters.`;
   try {
-    const response = await openai.chat.completions.create({
+    const response = await openAI.chat.completions.create({
       messages: [
         { role: "system", content: "you are a tour guide" },
         {
@@ -136,10 +136,14 @@ export const generateTrendingTours = async (country: string) => {
   }
 };
 
-export const generateTourImage = async (city: string, country: string) => {
+export const generateTourImage = async (
+  city: string,
+  country: string,
+  stop: string
+) => {
   try {
-    const tourImage = await openai.images.generate({
-      prompt: `a panoramic view of the ${city} ${country}`,
+    const tourImage = await openAI.images.generate({
+      prompt: `a panoramic view of the ${stop} in ${city} and ${country}`,
       n: 1,
       size: "512x512",
     });

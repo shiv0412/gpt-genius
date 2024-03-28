@@ -10,6 +10,7 @@ import InputField from "@/components/shared/InputField";
 import { IReduxStore, ITourDetailsWithUser } from "@/modals";
 import { updateTours } from "@/utils/redux/actions/actions";
 import { API_ENDPOINT } from "@/constants";
+import MyTourPageSkeleton from "@/components/shared/skeletons/MyTourPageSkeleton";
 
 interface ITourContainer {
   details: IReduxStore;
@@ -92,15 +93,19 @@ const TourContainer = ({ details, updateTours }: ITourContainer) => {
         handleClick={handleSearch}
       />
       <TourWrapper>
-        {isFetching
-          ? "Fetching the tours..."
-          : tourDetails?.map((tour: any, index: number) => {
-              return (
-                <Link href={`/assistant/tour/${tour.CITY}`} key={index}>
-                  {tour.CITY + ", " + tour.COUNTRY}
-                </Link>
-              );
-            })}
+        {isFetching ? (
+          <MyTourPageSkeleton />
+        ) : tourDetails && tourDetails.length > 0 ? (
+          tourDetails?.map((tour: any, index: number) => {
+            return (
+              <Link href={`/assistant/tour/${tour.CITY}`} key={index}>
+                {tour.CITY + ", " + tour.COUNTRY}
+              </Link>
+            );
+          })
+        ) : (
+          <i>No tours content.</i>
+        )}
       </TourWrapper>
     </Container>
   );

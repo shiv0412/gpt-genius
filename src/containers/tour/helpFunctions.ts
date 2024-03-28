@@ -16,6 +16,7 @@ export const saveTourDetails = (tourDetails: any, userId: string) => {
       stops: `${tourDetails.stops}`,
       title: tourDetails.title,
       id: userId,
+      isnotified: 0,
     }),
   })
     .then(() => {

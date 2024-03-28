@@ -7,8 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 import { connect } from "react-redux";
 
 import CustomLinkButton from "@/components/shared/CustomLinkButton";
-import { ITour } from "@/modals";
 import { generateTourImage } from "@/utils/actions";
+import SkeletonElement from "@/components/shared/skeletons/SkeletonElement";
 
 interface ITourDetailsContainer {
   details: any;
@@ -49,7 +49,19 @@ const Container = styled.div`
 `;
 
 const IsFetchingWrapper = styled.div`
-  padding: 32px 0;
+  padding: 32px 0 8px 0;
+  width: 250px;
+  position: relative;
+
+  span {
+    height: 150px;
+  }
+
+  p {
+    position: absolute;
+    top: 85px;
+    left: 45px;
+  }
 `;
 
 const TourDetailsContainer = ({ details, tourCity }: ITourDetailsContainer) => {
@@ -58,7 +70,12 @@ const TourDetailsContainer = ({ details, tourCity }: ITourDetailsContainer) => {
   })[0];
   const [tourImage, setTourImage] = useState<any>();
   const { mutate: fetchTourImage, isPending } = useMutation({
-    mutationFn: (query: ITour) => generateTourImage(query.city, query.country),
+    mutationFn: () =>
+      generateTourImage(
+        tourDetails.CITY,
+        tourDetails.COUNTRY,
+        tourDetails.STOPS.split(",")[0]
+      ),
     onSuccess: (data) => {
       if (data) {
         setTourImage(data);
@@ -74,7 +91,7 @@ const TourDetailsContainer = ({ details, tourCity }: ITourDetailsContainer) => {
   });
 
   useEffect(() => {
-    fetchTourImage({ city: tourDetails.CITY, country: tourDetails.COUNTRY });
+    fetchTourImage();
   }, []);
 
   return (
@@ -82,7 +99,10 @@ const TourDetailsContainer = ({ details, tourCity }: ITourDetailsContainer) => {
       <CustomLinkButton link={"/assistant/tour"} text={"Back to tour"} />
       {/* content section */}
       {isPending ? (
-        <IsFetchingWrapper>Fetching tour canvas...</IsFetchingWrapper>
+        <IsFetchingWrapper>
+          <SkeletonElement />
+          <p>AI is generating canvas...</p>
+        </IsFetchingWrapper>
       ) : (
         <Image
           loader={() => tourImage}
